@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced E-commerce Website</title>
+  <style>
+    /* General Styles */
+  body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    header .menu {
+      display: flex;
+      gap: 15px;
+    }
+    header .menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    header .menu a:hover {
+      text-decoration: underline;
+    }
+    /* Cart, Search, Location */
+    #cart {
+      background-color: #131921;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #search-bar {
+      padding: 5px;
+    }
+    #search-btn {
+      background-color: #ff9900;
+      color: white;
+      padding: 5px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #location, #language-select, #signin-btn, #login-btn {
+      color: white;
+      cursor: pointer;
+    }
+    /* Product Section */
+    .product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Fixed 3 columns */
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+    }
+    .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: sp;
+    padding: 10px;
+    }
+    .product-card .btn {
+    margin-top: auto; /* Pushes the button to the bottom */
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+    .product-card  img {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: contain; /* Ensures the image fills its container neatly */
+      /* transition: opacity 0.3s; Adds a fade effect on hover */
+    }
+    .product-card h3 {
+      font-family: Verdana;
+      font-size: 1.0em;
+      margin: 10px 0;
+      color: #333;
+      }
+
+    .product-card p {
+      font-family: Verdana;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #ff4343;
+     /* <!-- margin-top: auto;--> */
+    }
+
+    /* Cart Container */
+    .cart-container {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item h4 {
+      margin: 0;
+    }
+    .cart-item button {
+      background-color: #ff9900;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    /* Checkout */
+    #checkout-btn {
+      background-color: #131921;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+	/* Common Section Styles */
+    section {
+      margin: 30px auto;
+      padding: 25px;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    section h2 {
+      color: #ff6e40;
+      text-align: center;
+    }	
+	/* Slideshow and Image Styles */
+.slideshow-container, .food-gallery-container {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Set specific width and height for slideshow images */
+.slides, .food-gallery {
+  display: none;
+  width: 100%; /* Adjust to fit the container width */
+  height: 400px; /* Set fixed height */
+  object-fit: cover; /* Ensures aspect ratio is maintained */
+  border-radius: 10px;
+}
+
+.slideshow-container img, .food-gallery-container img {
+  width: 100%;
+  height: 400px; /* Fixed height for the images */
+  object-fit: cover; /* Ensures the image covers the entire area */
+  border-radius: 10px;
+}
+     .container {
+            width: 400px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0; /* Removes space between items */
+            border: 2px solid #ccc;
+            padding: 5px;
+        }
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 50%;
+            border: 1px solid #ddd;
+        }
+        .item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+		header .menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 10px; /* Adds space between menu items */
+}
+.btn-category {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-category:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.03);
+}
+
+.btn-category:active {
+  background-color: #d0d0d0;
+}
+select {
+  background-color: lightblue;
+}
+
+.hover-word {
+    position: relative;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    /* text-decoration: underline; */
+    margin: 10px;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    top: 100%; /* Adjust as needed */
+    left: 0;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    white-space: nowrap;
+    text-align: left;
+    
+
+}
+
+.popup a {
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.popup a:hover {
+    text-decoration: underline;
+}
+
+.hover-word:hover .popup {
+    display: block;
+}
+.test_head a{
+  cursor: pointer;
+  text-decoration: none;
+  padding: 20px;
+  color: #000000;
+
+}
+
+		
+
+  </style>
+  <script>
+    let slideIndex = 0;
+    let foodSlideIndex = 0;
+
+    function showSlides() {
+      const slides = document.getElementsByClassName("slides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1; }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 3000); // Change slide every 3 seconds
+    }
+	window.onload = function() {
+      showSlides();
+      
+    }
+  </script>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">E-Shop</div>
+    <div class="menu">
+	 <input type="text" id="search-bar" placeholder="Search products..." >
+	<button id="search-btn" onclick="searchProducts()">Search</button>
+      <select id="languageSelect" onchange="changeLanguage()">
+        <option value="" disabled selected>Select Language</option>
+        <option value="en">English</option>
+      </select>  
+      <a href="signin.html" id="signin-btn">Sign In</a>
+      <a href="login.html" id="login-btn">Login</a>
+      <div id="cart" onclick="toggleCart()">Cart <span id="cart-count">0</span></div>
+    </div>
+  </header>
+
+  <!-- Product Categories Section -->
+  <div style="text-align: center; margin-top: 1px; background-color: lightblue; padding: 1px; border-radius: 1px;" class = "test_head">
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+      <a href="home.html">Home</a>
+      <p><span class="hover-word">Electronic<span class="popup">
+        <a href="laptops.html">laptop</a><br>
+        <a href="Mobiles.html">Mobiles</a>
+    </span></p>   
+      <p><span class="hover-word">Clothing<span class="popup">
+        <a href="Women wear.html">Women Wear</a><br>
+        <a href="Mens Wear.html">Men Wear</a><br>
+        <a href="kidswear.html">Kids Wear</a>
+    </span></p>  
+        <a href="food.html">Atta, rice and grains</a>
+        <a href="fruits.html">Fruits & vegetables</a>
+        <a href="Babycare.html">Baby care</a>
+        <a href="bath.html">Bath & body</a>
+        <a href="Babycare.html">Beautycare</a>
+    </div>
+  </div>
+  
+  </div>
+  </div>
+<!-- <section class="slideshow-container">
+  <img src="https://m.media-amazon.com/images/G/31/img21/Watches2024/Feb/Categorypage/Hero/PC/14._CB581348226_.jpg" class="slides" alt="Restaurant Photo 1">
+  <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/4bbfeac1d24c98e6.jpeg?q=20" class="slides" alt="Restaurant Photo 2">
+  <img src="https://cdn.dribbble.com/userupload/12696790/file/original-35dc9c9a274e5f78423d0d5122a512f2.jpg?resize=1024x717&vertical=center" class="slides" alt="Restaurant Photo 3">
+</section> -->
+<!-- Product Section -->
+  <div class="product-container">
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ1MkalOpKxj-GogN3xAq0hSHas5X6e1QYVo2po3BERMRjJQM0N_4PQw-2sSadHOqnr2wwsE9HHfwLIn8smpxWNPX4r5rnwZAIRhQ6gM0Yj&usqp=CAE alt="Product 1"></a>
+      <h3>Amazon Brand - Solimo Dorado Toughened Glass 4 Seater Metal Dining Set (Black)</h3>
+      <p>₹12,999</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="clothing">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRgQap3IBXFQpmHnhDkVBRVwhZ2b8CqjF1NVAdrNFRKIRr2kExrS4qxNrnNy5JOwdnsOlpJ7NABLQslJsTVOpY8H5EvEDHT4qcGT0WuSYc0trY3emmUWWLw&usqp=CAE alt="Product 2">
+      <h3>AGARO 1000 W Black Stand Mixer  (Royal Stand)</h3>
+      <p>₹6,499</p>
+      <button class="btn" onclick="addToCart('Product 2', 39.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="home">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS8MzZjT-P2-NKVFWt-zAqw9_3XuL65Dqb_nKiCqmntXkV1u15zoelJqtmUYoX83Wp0SQowDt3clDTsdvUQlVTteodGVYHXusBtBPsV-Q4Imc8hEQKjUD0PIQ&usqp=CAE alt="Product 3">
+      <h3>VIDIEM EDGE SHINE 3 BURNER GAS STOVE</h3>
+      <p>₹6,990</p>
+      <button class="btn" onclick="addToCart('Product 3', 49.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSDrDr2Z6WD64F8tKKjxOFLJtQSoLd3CrQgs4H4nrm7T5kcpzSvpOBXIVXYcQ6cGq1I4uwRJmxo8IHkOC1W6ZTJPd10SD34j6ZmTl8AeVgytZ_A0fs2CmMT&usqp=CAE alt="Product 1">
+      <h3>Pigeon cutting board combo</h3>
+      <p>₹428</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT8zxiy0yvzqIIv4lovPwUo2XhtcMgEck-yb4EwaRu3dkNscylIQRslWujdGmHTcp1fXr_UPaSnOgbwIR69Wt8xy65zG5xi8uclfUP_Znp3TA_l-s-ozkFB&usqp=CAE alt="Product 1">
+      <h3>Amazon Basics 18-Piece Dinnerware Set, Service for 6 & Addis Deluxe 3 Pack Canisters-Stainless Steel, 1.4L 4.4/5 Condition: New Product ID: 149996816 </h3>
+      <p>₹13,589</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTkX3Xvlf8FUBr9tZHOe318PC4CDI5bbfcqVNvEIbcvqCMid2vyUIOERXsW383E4BUhg_rboC47vGdg1NtiKAYm0laaIR6KgsUM__cZ0BJ_&usqp=CAE alt="Product 1">
+      <h3>Morden Fort Round Dining Table Set For 2, </h3>
+      <p>₹16,120</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRusra0rQJRN1vV2VGBlt6GkxXDgSb_td6rIh_yZuBzYjPrL9X31wCLpCMlxZgrW89ZX_I1pQnkDcIpoD8LMWm_1k1oPKy-WwxvsGLl64Y3M-a18qZ2vzznj5Ct&usqp=CAE alt="Product 1">
+      <h3>Jakarta Pirelli Round Pedestal Dining Table</h3>
+      <p>₹28,500</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSms5UihVYxI7Coji49eKz6qVSrfohlq5w1_Mt51CpUXRnhlHohVhwajXc0ZAXirfrnp5YdpLMvt-BDk-RILo12klJoPs37ew&usqp=CAE alt="Product 1">
+      <h3>Jayemyer Space Saving Marble Top Six Seater Dining Table and Chairs Set of 7</h3>
+      <p>₹47,995</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS6_JdjrWvkxBlSvAZeO_6kAELa8jm4EYvb4Hx-hIRcXEjSPCWaKCQ73t_zkFkrdBugIelgS7d2cFz7vvKOpR98TozZXl6DFFw8YQ36hEU&usqp=CAE alt="Product 1">
+      <h3>Kookee Plastic Utility Container - 400 ml  (Clear)</h3>
+      <p>₹1,295</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS9rH91cs6A8BvwqSxopTWYg4Yu6yr55eXjHp68zOtKmR8RCHZwnxizwNZWP1yyMcVFIdWhesp9n8SR45bg2yLncWnxjmkHDRtMIaopn4IX&usqp=CAE alt="Product 1">
+      <h3>AAANS HANDICRAFTS Nonstick Spoon Set for Cooking Kitchen Tools Kitchen Tool Set</h3>
+      <p>₹184</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://m.media-amazon.com/images/I/71wqYUQj6GL._SX679_.jpg alt="Product 1">
+      <h3>Shay Ceramic Dinner Set, 21 Pcs, Black Gold | Shay Goldline Series</h3>
+      <p> ₹11,999</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSyB53jkyvdxBAmR_JFP2T4WEy0N2TItsuvT7p4829th_frxSeG4PWl1VepI31uv-kmF64llHOwmrWr6FmZ-nweLZOmdXo1_ipBwQ3kujqjI0KL6Dsx6Xarvg&usqp=CAE alt="Product 1">
+      <h3>Christopher Knight Acacia Wood Outdoor Dining Chairs, 2-Piece Set</h3>
+      <p>₹40,406</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSE9nR9KCnV9Vrm2pZIxvHNmgyy7MBuzPyQhLIXMm61Chf0m6zTtTX-1MC_WeoqPJrDXOMuxQ5NRZAf_RwfShLwjX_HEVJ59XbyBKCXVGGh&usqp=CAE alt="Product 1">
+      <h3>Silver, Set of 2 Triply Stainless Steel Cookware Set</h3>
+      <p> ₹2,449</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQT9pKYRy4DFc1ThiCVFLZBJu9GGJ7FwwmlCNdOjABxT-Xpy06p1KoR1HJT1aon3WlugP4ujlKFUj2tZAcjdH14b5uArPFNBDsZywIchVDs&usqp=CAE alt="Product 1">
+      <h3>YETI Rambler Tumbler is better than ever! Featuring 18/8 reinforced stainless steel, </h3>
+      <p>₹3,250</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSqwVHKBHkLh5l0W8ITJHzX5f6C5VlPY8bNuE8vi0ThPhMPsgjUW6-nVIB6W6vQzulhovtLEs-vopWKeoVqj7q6RJuGFbFZF2tmiAh1mTvd&usqp=CAE alt="Product 1">
+      <h3>Aluminium Non-Stick Casserole with Lid - 8L</h3>
+      <p>₹4,299</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQtI9DEuGCqsNdRoDFTdEeuEGixprUQVdmX2BP1rspqfGQf61lt0CyZSWmVeCj986TeWyZ2GZJ9o1rdVmvcWz4K5wT2Bpq1dIDWJMDXZ8k&usqp=CAE alt="Product 1">
+      <h3>Contemporary 6 Seater Dining Tables - Adam 6 Seater Folding Table</h3>
+      <p> ₹13,062</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQtQSjAZ1tGUF4nEGrAyabC_J8CspSmuihCScutcvZZfINxfoeyLzX7NCb-2QrQeDAqukJZoCjd-89hRI3L49LN051ZncWHRLP0cPEO-iI&usqp=CAE alt="Product 1">
+      <h3>Rosemary Oblivon Green & Transparent Manual Chopper</h3>
+      <p>₹281</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTNSl9wvNInPd4BfDlMc3tm_WyJ9lq9vFqEsUEp8tSXwndRSMaXuOQ4cJmfhGpt2e2-IpyPRUzJ3ayhIGkOTTFEVkeQCLKEFulz-aicLEG1UwhpzZaI-vfOlQ&usqp=CAEalt="Product 1">
+      <h3>glass storage jars with wooden lids</h3>
+      <p>₹675</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ2b919x3c-Fms2wBb2fUhZH9-A0JpzPwIOf0hrbEZfmfiwdIvo1nwaIyEe9p3FbJMQHlMY01_s_x3rwBR0jh32BnQHHw1k0dGi8t5v6c8&usqp=CAE alt="Product 1">
+      <h3>Valeria Doro Silicone Turner,Colo</h3>
+      <p>₹399</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSrB5ywmRvW0pPkRP-L-uyglhGr9q6FCuFHWBn9Dou7ve4yLaG0R_duj12Enwj1JhPDyXA_tLv-lhXYjnwHhJFq_kKki14_1Vzfbg3uGT94HUc1A7-jS-GQ&usqp=CAE alt="Product 1">
+      <h3>Le Creuset Stoneware Mug, 350ml</h3>
+      <p>₹1,350</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQGDT14h2TjHZnuVACQCBbUJ997Hq9Kb_RwCTMK2eFTAe8d9MuMQqcNUS-_G8h2f2EzVYnrk0thwWPqvodu0Vsf9TaV1oSRNEU1pKtPyvGNL032SWH--JBw&usqp=CAE alt="Product 1">
+      <h3>Stainless Steel Microoven Safe </h3>
+      <p>₹325</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRe9RHkRDGStxv5SWCHHJvpP2EwJUz1_-ZTszASxXtaA-qbICeANyykcL8cbzel2FE7qaumaLKMgSElXtXqKQeHHqFnvqIV&usqp=CAE alt="Product 1">
+      <h3>Pack Of 4 this containers for fridge storage set</h3>
+      <p>₹322</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSMBL9J_qc9JPjsGByFYaK4SV7kp57lJqfyCjgUNXTEh_nefbtYjpR9f27crV_WMngw2YnqkUsLlBurquMstbiJpoCr-B4c7w&usqp=CAEalt="Product 1">
+      <h3>Pack Of 4 CREATIVE HUB Serving Spoon</h3>
+      <p>₹337</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcStFoodMTM03CNQdR6BVhVgDcQrSLw5jHbkl-78MSkv5FC-sl_34Gv38dK9XcSw5njVlStyUljm1A6q4bwXk_v7ET5kyv-vRLQzgQ2zBCsD2H8nB3hJKVDq&usqp=CAE alt="Product 1">
+      <h3> Stainless Steel Product Breadth</h3>
+      <p> ₹322</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSZCflxIc1fPSL8nfRZELHDJZLitfltEraUNOIiJ9bGsiveTU2POPNKzoX9J1HruEx2j4mH1Tr7guAnbdt9DImhw5r2s3Li3mxhI4bdbFQeRKOc0-WuflPu&usqp=CAE alt="Product 1">
+      <h3>he MagSlider Lid, the YETI Rambler</h3>
+      <p> ₹2,993</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+</div>
+
+  <!-- Cart Container -->
+  <div id="cart-container" class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <button id="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    // Shopping Cart
+    let cart = [];
+    let cartCount = 0;
+
+    // Add Product to Cart
+    function addToCart(productName, price) {
+      const product = { name: productName, price: price };
+      cart.push(product);
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+    }
+
+    // Toggle Cart Visibility
+    function toggleCart() {
+      const cartContainer = document.getElementById("cart-container");
+      cartContainer.style.display = cartContainer.style.display === "none" || !cartContainer.style.display ? "flex" : "none";
+      updateCart();
+    }
+
+    // Update Cart Content
+    function updateCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = '';
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        totalPrice += item.price;
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <h4>${item.name}</h4>
+          <span>$${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(cartItem);
+      });
+
+      const totalDiv = document.createElement('div');
+      totalDiv.innerHTML = `<strong>Total: $${totalPrice.toFixed(2)}</strong>`;
+      cartItemsDiv.appendChild(totalDiv);
+    }
+
+    // Remove Product from Cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      cartCount--;
+      document.getElementById("cart-count").textContent = cartCount;
+      updateCart();
+    }
+
+    // Checkout
+    function checkout() {
+      alert("Proceeding to checkout...");
+    }
+
+    // Filter Products by Category
+    function filterCategory(category) {
+      const products = document.querySelectorAll(".product-card");
+      products
+      }

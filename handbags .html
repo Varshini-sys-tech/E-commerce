@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced E-commerce Website</title>
+  <style>
+    /* General Styles */
+  body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    header .menu {
+      display: flex;
+      gap: 15px;
+    }
+    header .menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    header .menu a:hover {
+      text-decoration: underline;
+    }
+    /* Cart, Search, Location */
+    #cart {
+      background-color: #131921;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #search-bar {
+      padding: 5px;
+    }
+    #search-btn {
+      background-color: #ff9900;
+      color: white;
+      padding: 5px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #location, #language-select, #signin-btn, #login-btn {
+      color: white;
+      cursor: pointer;
+    }
+    /* Product Section */
+    .product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Fixed 3 columns */
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+    }
+    .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: sp;
+    padding: 10px;
+    }
+    .product-card .btn {
+    margin-top: auto; /* Pushes the button to the bottom */
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+    .product-card  img {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: contain; /* Ensures the image fills its container neatly */
+      /* transition: opacity 0.3s; Adds a fade effect on hover */
+    }
+    .product-card h3 {
+      font-family: Verdana;
+      font-size: 1.0em;
+      margin: 10px 0;
+      color: #333;
+      }
+
+    .product-card p {
+      font-family: Verdana;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #ff4343;
+     /* <!-- margin-top: auto;--> */
+    }
+
+    /* Cart Container */
+    .cart-container {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item h4 {
+      margin: 0;
+    }
+    .cart-item button {
+      background-color: #ff9900;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    /* Checkout */
+    #checkout-btn {
+      background-color: #131921;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+	/* Common Section Styles */
+    section {
+      margin: 30px auto;
+      padding: 25px;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    section h2 {
+      color: #ff6e40;
+      text-align: center;
+    }	
+	/* Slideshow and Image Styles */
+.slideshow-container, .food-gallery-container {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Set specific width and height for slideshow images */
+.slides, .food-gallery {
+  display: none;
+  width: 100%; /* Adjust to fit the container width */
+  height: 400px; /* Set fixed height */
+  object-fit: cover; /* Ensures aspect ratio is maintained */
+  border-radius: 10px;
+}
+
+.slideshow-container img, .food-gallery-container img {
+  width: 100%;
+  height: 400px; /* Fixed height for the images */
+  object-fit: cover; /* Ensures the image covers the entire area */
+  border-radius: 10px;
+}
+     .container {
+            width: 400px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0; /* Removes space between items */
+            border: 2px solid #ccc;
+            padding: 5px;
+        }
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 50%;
+            border: 1px solid #ddd;
+        }
+        .item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+		header .menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 10px; /* Adds space between menu items */
+}
+.btn-category {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-category:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.03);
+}
+
+.btn-category:active {
+  background-color: #d0d0d0;
+}
+select {
+  background-color: lightblue;
+}
+
+.hover-word {
+    position: relative;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    /* text-decoration: underline; */
+    margin: 10px;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    top: 100%; /* Adjust as needed */
+    left: 0;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    white-space: nowrap;
+    text-align: left;
+    
+
+}
+
+.popup a {
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.popup a:hover {
+    text-decoration: underline;
+}
+
+.hover-word:hover .popup {
+    display: block;
+}
+.test_head a{
+  cursor: pointer;
+  text-decoration: none;
+  padding: 20px;
+  color: #000000;
+
+}
+
+		
+
+  </style>
+  <script>
+    let slideIndex = 0;
+    let foodSlideIndex = 0;
+
+    function showSlides() {
+      const slides = document.getElementsByClassName("slides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1; }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 3000); // Change slide every 3 seconds
+    }
+	window.onload = function() {
+      showSlides();
+      
+    }
+  </script>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">E-Shop</div>
+    <div class="menu">
+	 <input type="text" id="search-bar" placeholder="Search products..." >
+	<button id="search-btn" onclick="searchProducts()">Search</button>
+      <select id="languageSelect" onchange="changeLanguage()">
+        <option value="" disabled selected>Select Language</option>
+        <option value="en">English</option>
+      </select>  
+      <a href="signin.html" id="signin-btn">Sign In</a>
+      <a href="login.html" id="login-btn">Login</a>
+      <div id="cart" onclick="toggleCart()">Cart <span id="cart-count">0</span></div>
+    </div>
+  </header>
+
+  <!-- Product Categories Section -->
+  <div style="text-align: center; margin-top: 1px; background-color: lightblue; padding: 1px; border-radius: 1px;" class = "test_head">
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+      <a href="home.html">Home</a>
+      <p><span class="hover-word">Electronic<span class="popup">
+        <a href="laptops.html">laptop</a><br>
+        <a href="Mobiles.html">Mobiles</a>
+    </span></p>   
+      <p><span class="hover-word">Clothing<span class="popup">
+        <a href="Women wear.html">Women Wear</a><br>
+        <a href="Mens Wear.html">Men Wear</a><br>
+        <a href="kidswear.html">Kids Wear</a>
+    </span></p>  
+        <a href="food.html">Atta, rice and grains</a>
+        <a href="fruits.html">Fruits & vegetables</a>
+        <a href="Babycare.html">Baby care</a>
+        <a href="bath.html">Bath & body</a>
+        <a href="Babycare.html">Beautycare</a>
+    </div>
+  </div>
+  
+  </div>
+  </div>
+<!-- <section class="slideshow-container">
+  <img src="https://m.media-amazon.com/images/G/31/img21/Watches2024/Feb/Categorypage/Hero/PC/14._CB581348226_.jpg" class="slides" alt="Restaurant Photo 1">
+  <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/4bbfeac1d24c98e6.jpeg?q=20" class="slides" alt="Restaurant Photo 2">
+  <img src="https://cdn.dribbble.com/userupload/12696790/file/original-35dc9c9a274e5f78423d0d5122a512f2.jpg?resize=1024x717&vertical=center" class="slides" alt="Restaurant Photo 3">
+</section> -->
+<!-- Product Section -->
+  <div class="product-container">
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT-mKMzKitOx_30WBhLE5G_-l_Ec2ZNyIpPSY5oT3O_3UBOZR_Ee6v9KhszMYst63ak1vKXtLcGAa4yXcakDu1-yAnLrOzWVYS417kdCq1KiqFksveIWayh&usqp=CAE alt="Product 1"></a>
+      <h3>DaseinSatchel Purse Handbag for Women</h3>
+      <p>₹5,997</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="clothing">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTsPfafeeMTpgmEO6uPb35TU6y5d58y3ALwm8d7i5sQVmng2SPjjoxrEkCIrc2yrRkr4kUCw2vbM3nOQPstufYDt91ek6XA3aVIINf1q7vFjXZmcOeKqCXgZQ&usqp=CAc alt="Product 2">
+      <h3>women's pu leather handbag</h3>
+      <p>₹319</p>
+      <button class="btn" onclick="addToCart('Product 2', 39.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="home">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSvTPRjVCCjUljlZ7s7LhGon5AkFVXI6GA4JlDseNucGdXNEuqLVHFd4bgwDC-hjAdpGw6qNdZdA_gnNTrTaRy-_9FyBUZE3iRq4bolODIuj2gvW8gU5Pe8tQ&usqp=CAE alt="Product 3">
+      <h3>Mammon Women Handbags Combo</h3>
+      <p>₹588</p>
+      <button class="btn" onclick="addToCart('Product 3', 49.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRoaPB514j_3YR-OWAYMbvCy_IhNN52c-Dqg&s alt="Product 1">
+      <h3>Women Multipurpose Crossbody Bags</h3>
+      <p>₹1,472</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRymZkGMwTizK99W_0s11XXLpYV5mfPollt1A&s alt="Product 1">
+      <h3>Body Purse Waterproof Nylon Handbags with Zipper For Women</h3>
+      <p>₹499</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://m.media-amazon.com/images/I/61PPkRZByuL._AC_UY1000_.jpg alt="Product 1">
+      <h3>Zipper handbags</h3>
+      <p>₹658</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://m.media-amazon.com/images/I/51te8PlIwmL._SY695_.jpg alt="Product 1">
+      <h3>Orzah handbags for women</h3>
+      <p>₹299</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://assets.ajio.com/medias/sys_master/root/20230421/P0nQ/64428b76711cf97ba73ddf9a/-473Wx593H-460268665-olive-MODEL.jpg alt="Product 1">
+      <h3>Olive green handbag</h3>
+      <p>₹399</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsVaU0qyq_E0_g109KGhAvZTgGz_HfbtkqUQ&s alt="Product 1">
+      <h3>Beverly Hills Polo Club Bag</h3>
+      <p>₹219</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf35VdOvcGTvgB9gMAd1Vs7wZcch_S53ry_A&s alt="Product 1">
+      <h3>G9 Bags (Model-15G)</h3>
+      <p>₹1,500</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUfAz0oIDi1iguxegSmbWyFJKf7RdiiotZJQ&s alt="Product 1">
+      <h3>BLACK SPADÉ Embroidered Sling Bag </h3>
+      <p> ₹1,999</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKblY7BgCu1jZpaXXWCWyjzwdfDRUfKEcDFg&s alt="Product 1">
+      <h3>EVOLIC PU Leather hand bags,</h3>
+      <p>₹299</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAFqSnPXkHpJGLb_YuMJodD2mPsG6sKQxCFQ&s alt="Product 1">
+      <h3>KLEIO Leaf Pattern Sling Bag </h3>
+      <p> ₹599</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfaiJJY1PBXfSPxA98y98ZxMgKYJKcVTVXTA&s alt="Product 1">
+      <h3>Synthetic Leather Handbag for Women-(3 belts)</h3>
+      <p>₹399</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_0hECxRS8MKXP8bqrqHp_a0T33ggHC4umvA&s alt="Product 1">
+      <h3>Leather handbag</h3>
+      <p>₹499</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://m.media-amazon.com/images/I/61sTbD9Qo2L._AC_SX569_.jpg alt="Product 1">
+      <h3>NP Women Fashion Handbag Purse set 4pcs</h3>
+      <p> ₹1,499</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgU4NckKJAYCNQ-phCTXx7GdXm4djLOjkhUg&s alt="Product 1">
+      <h3>Pu leather classy handbag</h3>
+      <p>₹434</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://images.meesho.com/images/products/443891447/lhuhe_512.webp alt="Product 1">
+      <h3>Trendy sling bag</h3>
+      <p>₹286</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://images.meesho.com/images/products/428033097/vnbrp_512.webp alt="Product 1">
+      <h3>Small leather crossy handbag</h3>
+      <p>₹297</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://rukminim2.flixcart.com/image/850/1000/kk2wl8w0/hand-messenger-bag/7/n/f/new-model-lb1001-hand-held-bag-justeefy-original-imafzg6ywvag3hrv.jpeg?q=20&crop=false alt="Product 1">
+      <h3>Women Brown Hand-held Bag - Regular Size</h3>
+      <p>₹295</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://images.meesho.com/images/products/420081333/4iphq_512.webp alt="Product 1">
+      <h3>Solid Color Laptop Bag </h3>
+      <p>₹337</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://cdn.shopify.com/s/files/1/0558/3087/2250/files/SGTRNMDCRM_2_435x.webp?v=1716374620?v=1706687931&width=750 alt="Product 1">
+      <h3>Stlish sling bag</h3>
+      <p>₹369</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://images.meesho.com/images/products/79530592/eodkd_400.webp alt="Product 1">
+      <h3>Small leather purse</h3>
+      <p>₹347</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://ae01.alicdn.com/kf/Sbb482f2252974e2bb5372365e3d1c1f96.jpg alt="Product 1">
+      <h3>Backpack bag</h3>
+      <p> ₹780</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://assets.ajio.com/medias/sys_master/root/20220916/NWVe/632377e9f997dd1f8d019f91/lino_perros_off_white_satchel_bag_with_pinmount_logo.jpg alt="Product 1">
+      <h3>Linno Perres handbags</h3>
+      <p> ₹540</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+</div>
+
+  <!-- Cart Container -->
+  <div id="cart-container" class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <button id="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    // Shopping Cart
+    let cart = [];
+    let cartCount = 0;
+
+    // Add Product to Cart
+    function addToCart(productName, price) {
+      const product = { name: productName, price: price };
+      cart.push(product);
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+    }
+
+    // Toggle Cart Visibility
+    function toggleCart() {
+      const cartContainer = document.getElementById("cart-container");
+      cartContainer.style.display = cartContainer.style.display === "none" || !cartContainer.style.display ? "flex" : "none";
+      updateCart();
+    }
+
+    // Update Cart Content
+    function updateCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = '';
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        totalPrice += item.price;
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <h4>${item.name}</h4>
+          <span>$${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(cartItem);
+      });
+
+      const totalDiv = document.createElement('div');
+      totalDiv.innerHTML = `<strong>Total: $${totalPrice.toFixed(2)}</strong>`;
+      cartItemsDiv.appendChild(totalDiv);
+    }
+
+    // Remove Product from Cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      cartCount--;
+      document.getElementById("cart-count").textContent = cartCount;
+      updateCart();
+    }
+
+    // Checkout
+    function checkout() {
+      alert("Proceeding to checkout...");
+    }
+
+    // Filter Products by Category
+    function filterCategory(category) {
+      const products = document.querySelectorAll(".product-card");
+      products
+      }

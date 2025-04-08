@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced E-commerce Website</title>
+  <style>
+   /* General Styles */
+  body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    header .menu {
+      display: flex;
+      gap: 15px;
+    }
+    header .menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    header .menu a:hover {
+      text-decoration: underline;
+    }
+    /* Cart, Search, Location */
+    #cart {
+      background-color: #131921;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #search-bar {
+      padding: 5px;
+    }
+    #search-btn {
+      background-color: #ff9900;
+      color: white;
+      padding: 5px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #location, #language-select, #signin-btn, #login-btn {
+      color: white;
+      cursor: pointer;
+    }
+    /* Product Section */
+    .product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Fixed 3 columns */
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+    }
+    .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: sp;
+    padding: 10px;
+    }
+    .product-card .btn {
+    margin-top: auto; /* Pushes the button to the bottom */
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+    .product-card  img {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: contain; /* Ensures the image fills its container neatly */
+      /* transition: opacity 0.3s; Adds a fade effect on hover */
+    }
+    .product-card h3 {
+      font-family: Verdana;
+      font-size: 1.0em;
+      margin: 10px 0;
+      color: #333;
+      }
+
+    .product-card p {
+      font-family: Verdana;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #ff4343;
+     /* <!-- margin-top: auto;--> */
+    }
+
+    /* Cart Container */
+    .cart-container {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item h4 {
+      margin: 0;
+    }
+    .cart-item button {
+      background-color: #ff9900;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    /* Checkout */
+    #checkout-btn {
+      background-color: #131921;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+	/* Common Section Styles */
+    section {
+      margin: 30px auto;
+      padding: 25px;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    section h2 {
+      color: #ff6e40;
+      text-align: center;
+    }	
+	/* Slideshow and Image Styles */
+.slideshow-container, .food-gallery-container {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Set specific width and height for slideshow images */
+.slides, .food-gallery {
+  display: none;
+  width: 100%; /* Adjust to fit the container width */
+  height: 400px; /* Set fixed height */
+  object-fit: cover; /* Ensures aspect ratio is maintained */
+  border-radius: 10px;
+}
+
+.slideshow-container img, .food-gallery-container img {
+  width: 100%;
+  height: 400px; /* Fixed height for the images */
+  object-fit: cover; /* Ensures the image covers the entire area */
+  border-radius: 10px;
+}
+     .container {
+            width: 400px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0; /* Removes space between items */
+            border: 2px solid #ccc;
+            padding: 5px;
+        }
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 50%;
+            border: 1px solid #ddd;
+        }
+        .item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+		header .menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 10px; /* Adds space between menu items */
+}
+.btn-category {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-category:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.03);
+}
+
+.btn-category:active {
+  background-color: #d0d0d0;
+}
+select {
+  background-color: lightblue;
+}
+
+.hover-word {
+    position: relative;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    /* text-decoration: underline; */
+    margin: 10px;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    top: 100%; /* Adjust as needed */
+    left: 0;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    white-space: nowrap;
+    text-align: left;
+    
+
+}
+
+.popup a {
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.popup a:hover {
+    text-decoration: underline;
+}
+
+.hover-word:hover .popup {
+    display: block;
+}
+.test_head a{
+  cursor: pointer;
+  text-decoration: none;
+  padding: 20px;
+  color: #000000;
+
+}
+  </style>
+  <script>
+    let slideIndex = 0;
+    let foodSlideIndex = 0;
+
+    function showSlides() {
+      const slides = document.getElementsByClassName("slides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1; }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 3000); // Change slide every 3 seconds
+    }
+	window.onload = function() {
+      showSlides();
+      
+    }
+  </script>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">E-Shop</div>
+    <div class="menu">
+	 <input type="text" id="search-bar" placeholder="Search products..." >
+	<button id="search-btn" onclick="searchProducts()">Search</button>
+      <select id="languageSelect" onchange="changeLanguage()">
+        <option value="" disabled selected>Select Language</option>
+        <option value="en">English</option>
+      </select>  
+      <a href="signin.html" id="signin-btn">Sign In</a>
+      <a href="login.html" id="login-btn">Login</a>
+      <div id="cart" onclick="toggleCart()">Cart <span id="cart-count">0</span></div>
+    </div>
+  </header>
+
+  <!-- Product Categories Section -->
+  <div style="text-align: center; margin-top: 1px; background-color: lightblue; padding: 1px; border-radius: 1px;" class = "test_head">
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+      <a href="home.html">Home</a>
+      <p><span class="hover-word">Electronic<span class="popup">
+        <a href="laptops.html">laptop</a><br>
+        <a href="Mobiles.html">Mobiles</a>
+    </span></p>   
+      <p><span class="hover-word">Clothing<span class="popup">
+        <a href="Women wear.html">Women Wear</a><br>
+        <a href="Mens Wear.html">Men Wear</a><br>
+        <a href="kidswear.html">Kids Wear</a>
+    </span></p>  
+        <a href="food.html">Atta, rice and grains</a>
+        <a href="fruits.html">Fruits & vegetables</a>
+        <a href="Babycare.html">Baby care</a>
+        <a href="bath.html">Bath & body</a>
+        <a href="Babycare.html">Beautycare</a>
+    </div>
+  </div>
+  
+  </div>
+  </div>
+<!-- <section class="slideshow-container">
+  <img src="https://m.media-amazon.com/images/G/31/img21/Watches2024/Feb/Categorypage/Hero/PC/14._CB581348226_.jpg" class="slides" alt="Restaurant Photo 1">
+  <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/4bbfeac1d24c98e6.jpeg?q=20" class="slides" alt="Restaurant Photo 2">
+  <img src="https://cdn.dribbble.com/userupload/12696790/file/original-35dc9c9a274e5f78423d0d5122a512f2.jpg?resize=1024x717&vertical=center" class="slides" alt="Restaurant Photo 3">
+</section> -->
+<!-- Product Section -->
+  <div class="product-container">
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQQsJgu_FLwX_wUXxjf-MFgg6YMPKd4hyuTX46tEF8eSmQLxS_74IQgJlGHhJ4Rq8SOhR06FQeCcNCOUh9wqNAAE7kidr1rzx4LUXgNlKPL3Wwe4gxB2oVk&usqp=CAE alt="Product 1"></a>
+      <h3>Medicube Collagen Overnight Wrapping Peel Off Facial Mask Pack  (75 ml)</h3>
+      <p>₹1,371</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="clothing">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQMwJJziA3I5Ip4D05ql3EnGy3wTXdqdPsZ4s7MJNqbX1oL-iEBsm3EiYiDvRlFIz6vB9emCBCgbh1hmgnvcesXN4YAxNN0pFCtErx8TMxs2LJBbIbnHyKG&usqp=CAE alt="Product 2">
+      <h3>Niacinamide Face Serum With Rice Water</h3>
+      <p>₹531</p>
+      <button class="btn" onclick="addToCart('Product 2', 39.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="home">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ3unK-gPk8x6PgoMPpTlCU2-fzGTzhllogjiMiRxyVJlsyoQfV5T_HqqHj1HWDEcjv7vlJjKqN_pR6iqP4QeyafGPfmo13LljccoP5fUs4EYed2WGzNsxOWA&usqp=CAE alt="Product 3">
+      <h3> Hydrating Face Primer</h3>
+      <p>₹871</p>
+      <button class="btn" onclick="addToCart('Product 3', 49.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ0YAsOIFTct5GgV7Ew0CP8B09tONmDaonj6hfPA6llsesSwfScJvEO6YQQSh2EMpXIBp3BmbbvBdzZ6TZcH4bzeM5c5O7m_BDBngtSJPlX76Ie5Yc98kqD&usqp=CAE alt="Product 1">
+      <h3>NYX PROFESSIONAL MAKEUP Buttermelt Powder Blush</h3>
+      <p>₹1000</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQOisScwXWdgLFQyx5U_SefE6PeJTz604gqzZ7guBcfbKkpjNT0bferFETELErF4c-QPZw9jSof0bkqixTJIeXGhVPMv27utIx2apB401FirBkjmn2eAK8y&usqp=CAE alt="Product 1">
+      <h3>All I Need Makeup Kit with 9 eyeshadows</h3>
+      <p>₹399</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRlZyqE2X9Tf4OqEQrAqvDBeIZ21_7l076EWG0Rhekt8C8bb6Ukb7MDPXAOUek9Mj8hUwTsz5e4A0br4O6Wsut98SEEPQNmUUBdvo3Exl717nTiquKkpzK7&usqp=CAE alt="Product 1">
+      <h3>Swiss Beauty Select Here to Stay Liquid Lipsticks</h3>
+      <p>₹444</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS7AfLluooF2HqL3vqH5cHAm7wBuM5yhefG7xE-6CEnE_T3-Yjgy__ZL-TuTiNX7qJQD0PZjDQ99QkGR4ChtdbXfAS7VBNhjRn6ySGfuYdQ5ZscFCnry6ML&usqp=CAE alt="Product 1">
+      <h3>Dot & Key Watermelon SuperGlow Cleanser & Moisturizer Combo</h3>
+      <p>₹558</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTqZTA1mW_eLAUMEZaMX8X8qI5d5BBm-BvVwaO4DxEzxZ-0mnMA914nI5sfojD_j_7eT8x_7E6rZ4Q6nwPZC0g7XV_AsxK_tobF_emhU0Xf-B2Tz2pWw3V7eA&usqp=CAE alt="Product 1">
+      <h3>Lancôme Miracle Eau de Parfum</h3>
+      <p>₹6,634</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT7koY5E2ZIx7afh-iZGIOUL4PY9Htdj_baV988U05mStHp9RZENIVoxVyVFhDS9Y-Ecn1KO42jHBVEpPMC8jjkEYidcHSaLucFd9ATp7_Ul3hYwBKaYX5D_oc&usqp=CAE alt="Product 1">
+      <h3>Masterclass Radiant Cushion</h3>
+      <p>₹2,309</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQsAVCb07iBfse-_ZS5UDhHKz120wX1fSwxROejzmvO5OAMNCtZJx1PMASHjjDVGjaKwAcFA4MaglVDE8m2Y8BJysnW1Ko8l6gwSUpqWcFGTM883O9qFeI9Kg&usqp=CAE alt="Product 1">
+      <h3>blusher palette</h3>
+      <p>₹374</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQiwWlSdLDnrtQOX_lQ9WoBEMTaP-wDjcqHp28l-2zszFIGJzikC7JGwIkzVbY-l4cM5lhVKBpXfdClyBqZqfkmlk04DVxyv_NpqI45kv3K4DTo0IiYgoDxMQ&usqp=CAE alt="Product 1">
+      <h3>Mamaearth Glow Serum Foundation</h3>
+      <p> ₹496</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQNh6sc_byeyk94O21VkxfcFc4AS45KZE7OWs0REoWhs9uifUJG0si9YkDKkD7iFxcS9IKLPY7uf3q5P9b2QFBLFH3XBDmCoL4EssEKP1U&usqp=CAE alt="Product 1">
+      <h3>Benefit Fan Fest Fanning Volumizing Mascara</h3>
+      <p>₹2,009</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSQjF0KuNJxqF6FerkYPG79NiTnfNQV8W5E6240dax6MK8TZ_-KpxC1_Zii270A9Kh8WmB6rKQctO2LVm1PHrNnPwjQ0JG9rXfwQHYqEWM&usqp=CAE alt="Product 1">
+      <h3>DJATI Beauty 3in1 Primer Protects and Moisturises Oil </h3>
+      <p> ₹205</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRNwqqC5I2M15xxMRnwnUgVjbqAVFpfSLQcxV6lDBkTCt09OF6djww-IaR-yi-kMge8VYVwW0-kwJkh35Z_UYzC_m9x8JVcB3-SFWiFGIglKhDWolWlZeFuGg&usqp=CAE alt="Product 1">
+      <h3>Jimmy Choo Perfume</h3>
+      <p>₹2,759</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQOKCjiMqJChSHWJZ7vYSASnnQ4F4FLr_KC4mWVxeEbD2cKYzJeQQIXMtzisRfhOTy3EGmeCC4EjYVIQdltz9L0O0wnf5gieZtm7VAxYAAwfDqCCcakCP5s6g&usqp=CAE alt="Product 1">
+      <h3>DAIMANPU Vitality Superb All in 1 Face Makeup Combo</h3>
+      <p>₹399</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSFTH4CKyyblyibjW6OX6atwlmd-P2xCO2TqKuSl-OYWw6UN6HS238_btLBzZ0RdIb4GghLhp6-KJFGv08Ffut0dlij1jHY09B7nCghOGIia5klCpVAhHSElA&usqp=CAE alt="Product 1">
+      <h3>Ponds</h3>
+      <p> ₹140</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS0kwQ7GOaUU5cZhs5ZP_-duijIFeWDHKFwGG5aYGuLztDoAaS60rA_xrFt43yHR9nHWwBCPOW5MfaPKcdz6LnkRY1EDlag7EhpqVgViZscYr02gVoPd2UeNQ&usqp=CAE alt="Product 1">
+      <h3>Demi-Matte Lip Cream</h3>
+      <p>₹499</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS0hZA700Pu3YkpS00WTs1OiH0xZBruf24Ve7vyuDRR8crNcyGTGgwGo65ahBvVvKnrwnCz0T6ioVyz7n2IwVNzG5kN6cfsIaz7DzYKSaBksuPEWkh2TtK3&usqp=CAE alt="Product 1">
+      <h3>Blur Peptide Primer</h3>
+      <p>₹799</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR0LIBcmvcZTKwYTMenulrvXYzt7kfu6tzijWSbMutyVywrbW8uEDfIhrequiznOkH8HSeDOParI8rgKz9alXBTjINHPD-MYZq1Wyq5DkmcP2DtcT917UP11fs&usqp=CAE alt="Product 1">
+      <h3>LAKMÉ 9 To 5 Cc Cream Min</h3>
+      <p>₹99</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRWGZi-fBFDJVQwuPvW4EtSZg3udksNZvIjtyqm-SXmnRLyzpYZWVoiBDJ5ECOSNvpTjRPZqu8AGq-3PjcLGFrTTuLY2Kj6Or0wlM7WYGRv&usqp=CAE alt="Product 1">
+      <h3>Lash Sensational Sky High mascara</h3>
+      <p>₹599</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSNnEcYK-n2lZonxZWEq7bzZ8IQ_QIw7VLiTzQ_LPzyRTP01_kw2BT1F_-9N097InCoYxfu401WFnS9YEkDnEVFJAp49K_sGCmtPRGS_QS2WUiQx3JED5_p&usqp=CAEalt="Product 1">
+      <h3>Foxtale The Diva Overnight Glow Mask</h3>
+      <p>₹599</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQOjlUdKzi7jpLphxZZMkOoqDbvTvMGYFxBXLLq4LSXgOnmfwT8X5K4uCXjPcPofT0s0jO1O6T3bhaMplbHhGGk04ioLGeeTdQU98TVc02dX8YmZWJhqJob&usqp=CAE alt="Product 1">
+      <h3>Blue Heaven Festive Make Up Kit Fair Tone Combo Fair Tone - Pack of 8</h3>
+      <p>₹1088</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTzMIVGqAowQdoZsntnfYW1Gxa83Keif-X3IzdiwKVEcM-y_SJ829oqS5dbUeiohmUC2kQT5l_WsSXb_rTbUiSsmZzHPhcq2IVvzDwGMS2g_n1H5N_6VnYN&usqp=CAE alt="Product 1">
+      <h3>Maybelline Fit Me Loose Finishing Powder</h3>
+      <p>₹744</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTg2HmJDy99OHNQN5tLWKEeCv8uLqc1GhQmZVSA7zqMsRfIq5sEbhdr3VeG22YFzRro63C4daPBHMpGGEAbj859zFpRl5EVoCdewks-QF45_w0UTolWSUWxrg&usqp=CAE alt="Product 1">
+      <h3>Swiss Beauty's Makeup Fixer</h3>
+      <p> ₹175</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSuGfKLz6If74NJmTyxAtaG8qz9bF0QtVadlG_7F2f1slivmp-FtV1jJAmQoEGiZih0GOqngOLw94wq_Ub8KeMF3E97vAhg6EyGVWWZtZZ8&usqp=CAE alt="Product 1">
+      <h3>Strobe Creams - Highlighter + Moisturizer</h3>
+      <p> ₹355</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+</div>
+
+  <!-- Cart Container -->
+  <div id="cart-container" class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <button id="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    // Shopping Cart
+    let cart = [];
+    let cartCount = 0;
+
+    // Add Product to Cart
+    function addToCart(productName, price) {
+      const product = { name: productName, price: price };
+      cart.push(product);
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+    }
+
+    // Toggle Cart Visibility
+    function toggleCart() {
+      const cartContainer = document.getElementById("cart-container");
+      cartContainer.style.display = cartContainer.style.display === "none" || !cartContainer.style.display ? "flex" : "none";
+      updateCart();
+    }
+
+    // Update Cart Content
+    function updateCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = '';
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        totalPrice += item.price;
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <h4>${item.name}</h4>
+          <span>$${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(cartItem);
+      });
+
+      const totalDiv = document.createElement('div');
+      totalDiv.innerHTML = `<strong>Total: $${totalPrice.toFixed(2)}</strong>`;
+      cartItemsDiv.appendChild(totalDiv);
+    }
+
+    // Remove Product from Cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      cartCount--;
+      document.getElementById("cart-count").textContent = cartCount;
+      updateCart();
+    }
+
+    // Checkout
+    function checkout() {
+      alert("Proceeding to checkout...");
+    }
+
+    // Filter Products by Category
+    function filterCategory(category) {
+      const products = document.querySelectorAll(".product-card");
+      products
+      }

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced E-commerce Website</title>
+  <style>
+  /* General Styles */
+  body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    header .menu {
+      display: flex;
+      gap: 15px;
+    }
+    header .menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    header .menu a:hover {
+      text-decoration: underline;
+    }
+    /* Cart, Search, Location */
+    #cart {
+      background-color: #131921;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #search-bar {
+      padding: 5px;
+    }
+    #search-btn {
+      background-color: #ff9900;
+      color: white;
+      padding: 5px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #location, #language-select, #signin-btn, #login-btn {
+      color: white;
+      cursor: pointer;
+    }
+    /* Product Section */
+    .product-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Fixed 3 columns */
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+    }
+    .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: sp;
+    padding: 10px;
+    }
+    .product-card .btn {
+    margin-top: auto; /* Pushes the button to the bottom */
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+    .product-card  img {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: contain; /* Ensures the image fills its container neatly */
+      /* transition: opacity 0.3s; Adds a fade effect on hover */
+    }
+    .product-card h3 {
+      font-family: Verdana;
+      font-size: 1.0em;
+      margin: 10px 0;
+      color: #333;
+      }
+
+    .product-card p {
+      font-family: Verdana;
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #ff4343;
+     /* <!-- margin-top: auto;--> */
+    }
+
+    /* Cart Container */
+    .cart-container {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item h4 {
+      margin: 0;
+    }
+    .cart-item button {
+      background-color: #ff9900;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    /* Checkout */
+    #checkout-btn {
+      background-color: #131921;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+	/* Common Section Styles */
+    section {
+      margin: 30px auto;
+      padding: 25px;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    section h2 {
+      color: #ff6e40;
+      text-align: center;
+    }	
+	/* Slideshow and Image Styles */
+.slideshow-container, .food-gallery-container {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Set specific width and height for slideshow images */
+.slides, .food-gallery {
+  display: none;
+  width: 100%; /* Adjust to fit the container width */
+  height: 400px; /* Set fixed height */
+  object-fit: cover; /* Ensures aspect ratio is maintained */
+  border-radius: 10px;
+}
+
+.slideshow-container img, .food-gallery-container img {
+  width: 100%;
+  height: 400px; /* Fixed height for the images */
+  object-fit: cover; /* Ensures the image covers the entire area */
+  border-radius: 10px;
+}
+     .container {
+            width: 400px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0; /* Removes space between items */
+            border: 2px solid #ccc;
+            padding: 5px;
+        }
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 50%;
+            border: 1px solid #ddd;
+        }
+        .item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+		header .menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 10px; /* Adds space between menu items */
+}
+.btn-category {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-category:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.03);
+}
+
+.btn-category:active {
+  background-color: #d0d0d0;
+}
+select {
+  background-color: lightblue;
+}
+
+.hover-word {
+    position: relative;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    /* text-decoration: underline; */
+    margin: 10px;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    top: 100%; /* Adjust as needed */
+    left: 0;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    white-space: nowrap;
+    text-align: left;
+    
+
+}
+
+.popup a {
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.popup a:hover {
+    text-decoration: underline;
+}
+
+.hover-word:hover .popup {
+    display: block;
+}
+.test_head a{
+  cursor: pointer;
+  text-decoration: none;
+  padding: 20px;
+  color: #000000;
+
+}
+
+		
+
+  </style>
+  <script>
+    let slideIndex = 0;
+    let foodSlideIndex = 0;
+
+    function showSlides() {
+      const slides = document.getElementsByClassName("slides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1; }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 3000); // Change slide every 3 seconds
+    }
+	window.onload = function() {
+      showSlides();
+      
+    }
+  </script>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">E-Shop</div>
+    <div class="menu">
+	 <input type="text" id="search-bar" placeholder="Search products..." >
+	<button id="search-btn" onclick="searchProducts()">Search</button>
+      <select id="languageSelect" onchange="changeLanguage()">
+        <option value="" disabled selected>Select Language</option>
+        <option value="en">English</option>
+      </select>  
+      <a href="signin.html" id="signin-btn">Sign In</a>
+      <a href="login.html" id="login-btn">Login</a>
+      <div id="cart" onclick="toggleCart()">Cart <span id="cart-count">0</span></div>
+    </div>
+  </header>
+
+  <!-- Product Categories Section -->
+  <div style="text-align: center; margin-top: 1px; background-color: lightblue; padding: 1px; border-radius: 1px;" class = "test_head">
+
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+    <a href="home.html">Home</a>
+    <p><span class="hover-word">Electronic<span class="popup">
+      <a href="laptops.html">laptop</a><br>
+      <a href="Mobiles.html">Mobiles</a>
+  </span></p>   
+    <p><span class="hover-word">Clothing<span class="popup">
+      <a href="Women wear.html">Women Wear</a><br>
+      <a href="Mens Wear.html">Men Wear</a><br>
+      <a href="kidswear.html">Kids Wear</a>
+  </span></p>  
+      <a href="food.html">Atta, rice and grains</a>
+      <a href="fruits.html">Fruits & vegetables</a>
+      <a href="Babycare.html">Baby care</a>
+      <a href="bath.html">Bath & body</a>
+      <a href="Babycare.html">Beautycare</a>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- <section class="slideshow-container">
+  <img src="https://m.media-amazon.com/images/G/31/img21/Watches2024/Feb/Categorypage/Hero/PC/14._CB581348226_.jpg" class="slides" alt="Restaurant Photo 1">
+  <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/4bbfeac1d24c98e6.jpeg?q=20" class="slides" alt="Restaurant Photo 2">
+  <img src="https://cdn.dribbble.com/userupload/12696790/file/original-35dc9c9a274e5f78423d0d5122a512f2.jpg?resize=1024x717&vertical=center" class="slides" alt="Restaurant Photo 3">
+</section> -->
+<!-- Product Section -->
+  <div class="product-container">
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQud-3yr56n9EEA50KltYDVdKP__FEhetGml1wlqGJQolxoKSftjl2HST54wVdzFGxCtO1gQ7Vo_gtNjK-gvCcexPxH6Mgdzg&usqp=CAE alt="Product 1"></a>
+      <h3>Lenovo IdeaPad Slim 3 Intel Core i5 13th Gen 13420H</h3>
+      <p>₹59,999</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="clothing">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT4jY0SmoloMl0gBTblRU-_wLXOT1HCKz8XX330Ap5gnSoBDjdyMd6HbKQds6SlJXFCQZs38_CQD9UQ2_d55o_8D2SFXDXInVJQ_TZFCshdM_fNy71_vvFRSg&usqp=CAE alt="Product 2">
+      <h3>HP Intel Core i5 13th Gen 1334U - (16 GB/512 GB SSD/Windows 11 Home)</h3>
+      <p>₹55,900</p>
+      <button class="btn" onclick="addToCart('Product 2', 39.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="home">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQhvm7SDqNUIiww0FgWcrnBBHrrlcuQfQfIv-ZusCRtLah2TElQO4wQMR7tK9luVQTO3ovp9J4lgNtU6WLbBWh3UWAAbSA_Z25hRSUy-QP-LPfcYFhYfNR_bQ&usqp=CAE alt="Product 3">
+      <h3>MSI Modern 15 B13M Laptop (i7-1355U/Iris Xe Graphics)</h3>
+      <p>₹62,830</p>
+      <button class="btn" onclick="addToCart('Product 3', 49.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSu8vQgWsTDYxQd4xoloML6Y8iTVEuo-Jro5Z1BFPgC3uUEwbrwRZg4qGISRVFPxhlOoTRRA6U_YALlwMsdDKgL14RqKewgR100mWY1S-kk&usqp=CAE alt="Product 1">
+      <h3>Infinix ZL513 Intel Core i9 13th Gen 13900H 15.6 Inches Notebook Laptop</h3>
+      <p>₹71,736</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQJHtvKJ45PtnBKEVuWMRgxcME1uE8LAwC-waXtUG4UvQXGzvM59llcVyhoJts1slyaGV9f0Es44YURCpbSu0fc_gQaeAeIYoKWZGc4YTxaxKfwkhIhNJQ3xA&usqp=CAE alt="Product 1">
+      <h3>ASUS 15.6 inch AMD Ryzen 3 7320U 8GB RAM 512GB SSD AMD Radeon Graphics Gaming Laptop </h3>
+      <p>₹34,653</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSdhaJiro8ShBndow__Er9JtZYfh2QuAdHsefY5Tgr1_FMFsgnG-wI6nFUZ5viOknyKCyeZg2gI-ZJJ4uKvStdO60GtU-a7tawKTpDg5NpToI4fiZMV2oH4&usqp=CAE alt="Product 1">
+      <h3>Dell Inspiron 16 5620 Laptop - 16.0-inch 16:10 FHD, Windows 11 Home - Platinum Silver</h3>
+      <p>₹89,792</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQGdI3c7YytUWhYE5aMtGzhSPMuTAtbswJICABVj-dfthILQiw9NsQXF68jdQYUMO1faaFGr6oldjasH6TPMupxfW7AbohCgDglBMMks0hekI7CReAeIB7VKg&usqp=CAE alt="Product 1">
+      <h3>Jiobook 11 2023 nb1112mm (blu) mediatek 8788 octa-corethin and light laptop 4 gb lpddr4 64 gb</h3>
+      <p>₹12,489</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRqhvcQUw0xHgKc7l_nWYcFq0sbwBV5PwLn_qCSlkZ1v5LOV_JTHQZguMl07vESIATi2O4NZKKUGVBCHNc5HrXVPMpN40H7LWMZgQKgzz2w&usqp=CAE alt="Product 1">
+      <h3>Acogedor 14.1 inch Laptop, 232GB, for Windows 10 Computer, Z8350 CPU Processor Portable Notebook PC, for Students U.S. regulations</h3>
+      <p>₹43,983</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSOHIN2NKli83OCWUc4k4Ayfu6tIqzCqq52VKQBQewi5dDQVAKdndGA0A7ODjkQU7kBEA9N4KknDuzVU-RGLnl0fqxmuPcU2i_R75aD_jnaYLQIcYxzo2Yg&usqp=CAE alt="Product 1">
+      <h3>Lenovo IdeaPad Slim 5 Intel Core Ultra 5 125H Windows 11 Home Laptop, 83DC0003IN</h3>
+      <p>₹77,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQVMi6n1Tyn-d_2VJ2L7In9IHPMTIgp9lkDp_SvfRvGRkfVJwEYdNnQcVNRiq-54hd_8CnsxDM-WPdur8J_mhgNAJ4JvHzZbCc5d85KJowUYDkkcexNQZzt&usqp=CAE alt="Product 1">
+      <h3>Acer ALG Gaming Laptop Intel Core i5-12450H Processor (Windows 11 Home/ 16 GB/ 512 GB SSD/NVIDIA GeForce RTX 3050/144 Hz)</h3>
+      <p>₹63,999</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSXF-5VYIHux9euqpBy9RcTGNn3TZh9jh7HsJ-Umsn0j7605bqNAMhlPvgDWjY24q58bAOwWib_nVcm8p0k8uwcti56bG85Kt19w4b6Y3sk11sSqyb998aZTg&usqp=CAE alt="Product 1">
+      <h3>RedmiBook Pro XMA2101-BN Intel Core i5 11th Gen H Series 15.6-inch(39.62 cm) </h3>
+      <p> ₹40,889</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRKkgbXhnOpISzHDpYeZ_ejrPIypMgvzXo62N9rsy32HRO6GkmqGrAk9Cnru7UEIskLrokARXfe3sYibccfAS75Uivj3RBH1UNQBMM_bsCxS5gXxaBsQwu_&usqp=CAE alt="Product 1">
+      <h3>HP Envy x360 2-in-1 Laptop,AMD Ryzen 7 7730U,15.6-inch(39.6 cm),FHD,Touch</h3>
+      <p>₹79,490</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRVF4m-GLIqGK7W2AtwzEk2Z5aSgnIlWuMH9ec9-uprBAUEAkHaDIksdeYfU2mlvil68pd8vJSWRMohwDFrLasBAzJBPJb7Yk2XlCF3hT7ApLAbwSVpkqoKig&usqp=CAE alt="Product 1">
+      <h3>Dell Inspiron 3530 Laptop, 13th Generation Intel Core i7-1355U Processor, 16GB, </h3>
+      <p> ₹67,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+	<div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSAKXwu2n-8XAxusUes5bOAe90n0ie0zVYzXL9ZN9Zlu0f6iEj9Q1AC1MAYHDTv3Q98Cl5YfIwjkYjmAPqI_u7jz47XhJZyjlyKD3aHxKK7i2S5aI_3-frwrw&usqp=CAE alt="Product 1">
+      <h3>14inch ultrabook laptop Windows 10 notebook computer 10000mAh battery Intl Atom X5 Z8350 2GB 32GB EMMC ROM WIFI camera</h3>
+      <p>₹24,545</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTqO3QxoL3U5ZJQAQP0HRMi0CqkiXmqh7a_zMa42EtVR0IU8416M3w1_ZuIrXVhT2jfXEdPR8qmrvZLzAEYi4x5Nz8TjI4R9kE_Jqd2jMl2S1I_wHf5m-HZ&usqp=CAE alt="Product 1">
+      <h3>Thomson NEO Core Series Intel Core i3 12th Gen 1215U - (8 GB/512 GB SSD/Windows 11 Home) </h3>
+      <p>₹24,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSNocFnUWDPucxxnnY6AH-AVqkFieVPsBv4PrpbiVgZjV20kge0HeZ0CZ1gqRKWFRRr902hNB1-3ND2_eijA6bM2qyAXxmF7e43loDlkX2FouZpniLmKNi5&usqp=CAE alt="Product 1">
+      <h3>Infinix INBook X1 Intel Core i3 10th Gen 1005G1 - (8 GB/256 GB SSD/Windows 11 Home) </h3>
+      <p> ₹37,999</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQTIYLlIMe1YSZsIwiv7lwHyu5x5r2GnUaknwX28_rha44fcnmsLy4DMatKEVHG_wCJiXfm9wBweY8Bjlz3WZF0UzRZF5dvE3ML0Ig1MlbKStPCrkm0ku7gpg&usqp=CAE alt="Product 1">
+      <h3>Ultimus Neo Intel Core i3 10th Gen 1035G4 - (8 GB/256 GB SSD/Windows 11 Home) </h3>
+      <p>₹21,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ6e8yTTVWf1PHaBoGo5sZDFhWoFm-2BwSBjsuF_hvB_VpZJHC5Vbobr4EPGljkOTik2rKH2UgF--jYpH8M2iIX6HoppH0GoY8UPhWr--v5OVcuzFoiGt_N&usqp=CAE alt="Product 1">
+      <h3>Apple MacBook AIR Apple M2 - (8 GB/256 GB SSD/Mac OS Monterey</h3>
+      <p>₹80,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ4o7Qqp7nVn7cHwK46yQEu8kHoNAyeVNhn70qiFiSZqtbuuV4fBijhe67D7tjuXRsHBneETWjyiBuMDiRl2ZTmCNn6OezkDvT_lIRVLKgR&usqp=CAE alt="Product 1">
+      <h3>WINGS Nuvobook Pro Aluminium Alloy Metal Body Intel Intel Core i7 11th Gen 1165G7 - (16 GB/512 GB SSD/Windows 11 Home) </h3>
+      <p>₹46,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR8Eovgwb_o6LH9VL2fFhWtbIn-0Gk7gK2MbP40ajE1M_oSEbBV6XAY_zR7s3eaZ6x5o-8Rksm15JzLJNrgycVurm-12fO6fWWBsBdy1n6SDqEnHSyXdPHjKA&usqp=CAE alt="Product 1">
+      <h3>Lenovo IdeaPad Flex 5 AMD Ryzen 7 Octa Core 5700U - (16 GB/512 GB SSD/Windows 11 Home) </h3>
+      <p>₹70,950</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTGMLwIp2t0bRVNIOSSp00sAv3AXXttWOfrzgORRBNaGRVRFu-9kKas4CwYz21GCHz8ShtA3VN0wmq1dWmXO8Mf2afqrbiu5_X2Wes5zLJUqO5M-9j5yeku&usqp=CAE alt="Product 1">
+      <h3>MSI Raider 18 HX Intel Core i9 14th Gen 14900HX </h3>
+      <p>₹3,90,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQEngiWHjtPbwjPGHhuk0QncrUa85eF4D6T4jghShhT1iUDBchPdDrB284gm5lIDk5SiD6xOjObjKA_11vfAackCbZzbZ0y8cqh1nP53Nds5Ua4SZm6YniS&usqp=CAE alt="Product 1">
+      <h3>MICROSOFT Laptop Go 3 Intel Core i5 12th Gen 1235U - (8 GB/256 GB SSD/Windows 11 Home) </h3>
+      <p>₹79,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR95EeVcJAapTBy9Kq9z6KSuQHZivAafgThPIQEdS93JTinv-qzlrBkihSHa8QoUJJ6yPnovU334CXS1_jtALtMr1XEwWV7t9-SN6X15H6V&usqp=CAE alt="Product 1">
+      <h3>HP Pavilion x360 Intel Core i5 12th Gen 1235U - (16 GB/512 GB SSD/Windows 11 Home) </h3>
+      <p>₹71,990</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSl2p2MmaAqKJ7oSklBsWoPLNKvHjVv3TXXKUIwgEAOVmqc14lb2I1z2NfRzCwVX7IrPdNLvoCvB8A4buuwIeFGd7zqT1cr6EqCH2flk8keHEB8xkBDDRMj&usqp=CAE alt="Product 1">
+      <h3>ASUS Intel Core i7 12th Gen 12700H - (16 GB/512 GB SSD/Windows 11 Home)</h3>
+      <p> ₹81,649</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+	    <!-- <button class="image-btn" onclick="window.location.href='product-details.html'"> -->
+      <img src=https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTMwFZYre08o1OSaLZ94OZlMUviAWIEBvQCMytEhVRCjHY2USk1iU5KF_QcVDELOJUGll3VUboHkQDRfSdhbu9huXT9PgaM6Wlr9d1CEho&usqp=CAE alt="Product 1">
+      <h3>Acer Predator Helios Neo 14 Intel Core Ultra 7 155H - (16 GB/1 TB SSD/Windows 11 Home)</h3>
+      <p> ₹1,42,580</p>
+      <button class="btn" onclick="addToCart('Product 1', 29.99)">Add to Cart</button>
+    </div>
+</div>
+
+  <!-- Cart Container -->
+  <div id="cart-container" class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <button id="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    // Shopping Cart
+    let cart = [];
+    let cartCount = 0;
+
+    // Add Product to Cart
+    function addToCart(productName, price) {
+      const product = { name: productName, price: price };
+      cart.push(product);
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+    }
+
+    // Toggle Cart Visibility
+    function toggleCart() {
+      const cartContainer = document.getElementById("cart-container");
+      cartContainer.style.display = cartContainer.style.display === "none" || !cartContainer.style.display ? "flex" : "none";
+      updateCart();
+    }
+
+    // Update Cart Content
+    function updateCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = '';
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        totalPrice += item.price;
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <h4>${item.name}</h4>
+          <span>$${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(cartItem);
+      });
+
+      const totalDiv = document.createElement('div');
+      totalDiv.innerHTML = `<strong>Total: $${totalPrice.toFixed(2)}</strong>`;
+      cartItemsDiv.appendChild(totalDiv);
+    }
+
+    // Remove Product from Cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      cartCount--;
+      document.getElementById("cart-count").textContent = cartCount;
+      updateCart();
+    }
+
+    // Checkout
+    function checkout() {
+      alert("Proceeding to checkout...");
+    }
+
+    // Filter Products by Category
+    function filterCategory(category) {
+      const products = document.querySelectorAll(".product-card");
+      products
+      }
