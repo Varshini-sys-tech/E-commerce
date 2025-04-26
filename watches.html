@@ -308,6 +308,118 @@ select {
       showSlides();
       
     }
+    let cart = [];
+    let cartCount = 0;
+
+    // Function to add product to cart
+    function addToCart(productName, price) {
+      const product = { name: productName, price: price };
+      cart.push(product);
+      cartCount++;
+      
+      // Update cart count display
+      document.getElementById("cart-count").textContent = cartCount;
+      
+      // Show a confirmation message
+      alert(productName + " added to cart!");
+      
+      // Optionally update the cart display if it's currently visible
+      if (document.getElementById("cart-container").style.display === "flex") {
+        updateCart();
+      }
+      
+      // Store cart in localStorage for persistence
+      saveCart();
+    }
+
+    // Function to toggle cart visibility
+    function toggleCart() {
+      const cartContainer = document.getElementById("cart-container");
+      cartContainer.style.display = cartContainer.style.display === "none" || !cartContainer.style.display ? "flex" : "none";
+      
+      // Update cart contents when showing the cart
+      if (cartContainer.style.display === "flex") {
+        updateCart();
+      }
+    }
+
+    // Function to update cart display
+    function updateCart() {
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = '';
+      let totalPrice = 0;
+
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p>Your cart is empty</p>';
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        totalPrice += item.price;
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <h4>${item.name}</h4>
+          <span>₹${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(cartItem);
+      });
+
+      const totalDiv = document.createElement('div');
+      totalDiv.style.marginTop = "20px";
+      totalDiv.style.fontSize = "18px";
+      totalDiv.innerHTML = `<strong>Total: ₹${totalPrice.toFixed(2)}</strong>`;
+      cartItemsDiv.appendChild(totalDiv);
+    }
+
+    // Function to remove product from cart
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      cartCount--;
+      document.getElementById("cart-count").textContent = cartCount;
+      updateCart();
+      saveCart();
+    }
+
+    // Function to save cart to localStorage
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cartCount', cartCount);
+    }
+
+    // Function to load cart from localStorage
+    function loadCart() {
+      const savedCart = localStorage.getItem('cart');
+      const savedCount = localStorage.getItem('cartCount');
+      
+      if (savedCart && savedCount) {
+        cart = JSON.parse(savedCart);
+        cartCount = parseInt(savedCount);
+        document.getElementById("cart-count").textContent = cartCount;
+      }
+    }
+
+    // Function for checkout
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      
+      alert("Proceeding to checkout...");
+      // Here you would typically redirect to a checkout page
+      // window.location.href = "checkout.html";
+    }
+
+    // Load cart data when page loads
+    window.onload = function() {
+      // Your existing onload code
+      showSlides();
+      
+      // Add this new function to load the cart
+      loadCart();
+    }
   </script>
 </head>
 <body>
